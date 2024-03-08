@@ -8,6 +8,9 @@ const token = process.env.FILLOUT_TOKEN;
 if (!token) {
   console.error("Please set FILLOUT_TOKEN env variable!!!");
 }
+
+/* 'filters' is used for newly added filter parameters and 
+'otherParams' is used to pass the other existing parameters.*/
 app.get("/filteredResponses", async (req, res) => {
   let { filters, ...otherParams } = req.query;
   let responses = await getReponses(otherParams);
@@ -21,6 +24,7 @@ app.listen(port, () => {
   console.log(`app listening on port ${port}`);
 });
 
+/*getReponses will fetch submissions with other params  */
 const getReponses = async (params) => {
   var url = new URL(submissionsUrl);
 
@@ -37,6 +41,7 @@ const getReponses = async (params) => {
   }
 };
 
+/* logic to filter the responses based on filter parametrs */
 const filterReponses = (responses, filters) => {
   return responses.filter((response) => {
     let filterResponse = true;
